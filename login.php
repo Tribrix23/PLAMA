@@ -1,37 +1,31 @@
 <?php
-$database_host = 'aws-0-ap-southeast-1.pooler.supabase.com';
-$database_user = 'postgres.wxrqvsfsczllgbfwkylx';
-$database_password = 'Davidperez1234';
-$database_name = 'postgres';
-$database_port = '6543';
+$database_host = 'localhost';
+$database_user = 'root';
+$database_password = '';
+$database_name = 'us';
 
-$conn_string = "host=$database_host port=$database_port dbname=$database_name user=$database_user password=$database_password";
-$conn = pg_connect($conn_string);
-
-if (!$conn) {
-    die("Connection failed: " . pg_last_error());
+$conn = new mysqli($database_host, $database_user, $database_password, $database_name);
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $result = pg_prepare($conn, "get_user", "SELECT password FROM users WHERE email = $1");
-    $result = pg_execute($conn, "get_user", array($email));
+    $stmt = $conn->prepare("SELECT password FROM users WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->bind_result($hashed_password);
+    $stmt->fetch();
 
-    if ($result && pg_num_rows($result) > 0) {
-        $row = pg_fetch_assoc($result);
-        $hashed_password = $row['password'];
-
-        if (password_verify($password, $hashed_password)) {
-            echo "Login Success";
-        } else {
-            echo "Invalid email or password.";
-        }
+    if (password_verify($password, $hashed_password)) {
+        echo "Login Success";
     } else {
         echo "Invalid email or password.";
     }
+    $stmt->close();
 }
 
-pg_close($conn);
+$conn->close();
 ?>
