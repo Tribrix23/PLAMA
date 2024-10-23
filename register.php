@@ -24,10 +24,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $username = $_POST['username'];
     $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-    $otp = rand(100000, 999999);
 
-    $stmt = pg_prepare($conn, "insert_user", "INSERT INTO users (email, username, password, otp) VALUES ($1, $2, $3, $4)");
-    $result = pg_execute($conn, "insert_user", array($email, $username, $password, $otp));
+    $stmt = pg_prepare($conn, "insert_user", "INSERT INTO users (email, username, password) VALUES ($1, $2, $3)");
+    $result = pg_execute($conn, "insert_user", array($email, $username, $password));
 
     if ($result) {
         $mail = new PHPMailer(true);
@@ -44,11 +43,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $mail->addAddress($email);
 
             $mail->isHTML(true);
-            $mail->Subject = 'Your OTP Code';
-            $mail->Body = "Your OTP code is: <strong>$otp</strong>";
+            $mail->Subject = 'Registration Successful';
+            $mail->Body = "Thank you for registering!";
 
             $mail->send();
-            echo "OTP has been sent to your email.";
+            echo "Registration successful! A confirmation email has been sent.";
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
