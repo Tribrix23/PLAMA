@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PLAMA</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body, html {
+            height: 100%;
+            margin: 0;
+        }
+        .bg-image {
+            background-image: url('images/h4348938.png');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+        }
+        .header-container {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            justify-content: space-between;
+            align-items: center; 
+            padding: 20px; 
+        }
+        .logo {
+            max-width: 20%;
+            height: auto; 
+        }
+        .login-btn {
+            display: flex;
+            width: 150px;
+            overflow: hidden;
+            border: none;
+            cursor: pointer;
+            text-decoration: none; 
+        }
+        .login-btn img {
+            width: 100%;
+            transition: transform 0.3s ease;
+        }
+        .login-btn:hover img {
+            transform: scale(1.1); 
+        }
+        
+        @media (max-width: 768px) {
+            .logo {
+                max-width: 40%; 
+            }
+            .login-btn {
+                width: 120px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo {
+                max-width: 50%; 
+            }
+            .login-btn {
+                width: 100px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-image"></div>
+    <div class="header-container">
+        <img src="images/Your paragraph text.png" class="logo img-fluid" alt="logo">
+        <a href="login.html" class="login-btn">
+            <img src="images/Your paragraph text (1).png" class="button img-fluid" alt="Login">
+        </a>
+    </div>
+    <div class="container">
+       
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
